@@ -8,6 +8,11 @@ class APIAdapterBase(ABC):
     def get_aeroplanes(self, country: str):
         pass
 
+    @abstractmethod
+    def cast_to_object_list(self, aeroplanes):
+        pass
+
+
 class APIAdapter(APIAdapterBase):
 
     def __init__(self) -> None:
@@ -48,6 +53,28 @@ class APIAdapter(APIAdapterBase):
 
         #Пример ответа от opensky-network можно посмотреть в задании курсовой.
         self.aeroplanes = response.json()
+
+        return response.json()
+
+    def cast_to_object_list(self, aeroplanes):
+        planes_object_list = []
+
+        for plane in aeroplanes['states']:
+            plane_info = {
+                'plane_id': plane[0],
+                'call_sign': plane[1],
+                'plane_country': plane[2],
+                'longitude': plane[5],
+                'latitude': plane[6],
+                'baro_altitude': plane[7],
+                'on_ground': plane[8],
+                'velocity': plane[9],
+                'true_track': plane[10],
+                'vertical_rate': plane[11]
+            }
+            planes_object_list.append(plane_info)
+
+        return planes_object_list
 
 # api = APIAdapter()
 # api.get_aeroplanes('Azerbaijan')

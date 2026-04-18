@@ -1,5 +1,5 @@
 
-class PlaneInfo:
+class PlanesInfo:
 
     def __init__(self, planes_info_response, icao24):
         self.time = planes_info_response['time']
@@ -9,9 +9,9 @@ class PlaneInfo:
 
     def get_plane(self):
         return {
-            'place_id': self.plane_info[0],
+            'plane_id': self.plane_info[0],
             'call_sign': self.plane_info[1],
-            'display_name': self.plane_info[2],
+            'country': self.plane_info[2],
             'longitude': self.plane_info[5],
             'latitude': self.plane_info[6],
             'baro_altitude': self.plane_info[7],
@@ -32,4 +32,8 @@ class PlaneInfo:
         return res_plane
 
     def is_equal_speed(self, other):
-        pass
+        if not isinstance(self, PlanesInfo) or not isinstance(other, PlanesInfo):
+            raise TypeError('Некорректный тип аргуманта!')
+
+        self_state = self.get_plane()
+        other_state = other.get_plane()
