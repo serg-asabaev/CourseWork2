@@ -4,27 +4,43 @@ from src.plane import Plane
 from src.planes_info import PlanesInfo
 
 api = APIAdapter()
-json_saver = JSONSaver()
+json_saver = JSONSaver('data/planes_info.json')
 
 def user_interaction():
-    country = input('Введите название страны: ')
+    """Функция для взаимодействия с пользователем"""
 
-    planes_info = api.get_aeroplanes(country)
-    planes_info = api.cast_to_object_list(planes_info)
+    # Получение списка самолетов надо указанной страной
+    country = input('Введите название страны (на английском): ')
 
-    json_saver.save_list_to_file(planes_info, 'data/planes_info.json')
+    planes = api.get_aeroplanes(country)
+    planes_info = PlanesInfo(planes)
+    planes = api.cast_to_object_list(planes)
 
-    plane1 = Plane('39de4f1', 'TVF3422', 'France', 6.7779, 48.0356)
+    # Получение топ N самолетов по высоте полета
+    planes_count = int(input('Введите количество самолетов с наибольшей высотой полета: '))
 
-    plane1.on_ground = False
-    plane1.baro_altitude = 10000
-    plane1.true_track = 10.045
-    plane1.velocity = 854
-    plane1.vertical_rate = 0
+    top_planes = planes_info.top_planes_by_altitude(planes_count, planes)
 
-    json_saver.add_plane('data/planes_info.json', plane1)
+    # Получение самолетов по стране регистрации
+    planes_country = input('Введите страну регистрации самолета (на английском): ')
 
-    json_saver.delete_plane('data/planes_info.json', '39de4f1')
+    planes_by_country = planes_info.planes_by_country(planes_country, planes)
+
+
+    # print(top_planes)
+    #
+    # json_saver.save_list_to_file(planes)
+    #
+    # plane1 = Plane('39de4f1', 'TVF3422', 'France', 6.7779, 48.0356, 10000
+    #                , False, 854, 10.045, 0)
+    #
+    # plane2 = Plane('39de4f2', 'TVF3423', 'France', -15.15398, 155.0356, 8000
+    #                , False, 852, 10.045, 0)
+    #
+    # json_saver.add_plane(plane1)
+    #
+    # json_saver.delete_plane('39de4f1')
+    # print(plane1 < plane2)
 
 
 if __name__ == '__main__':
