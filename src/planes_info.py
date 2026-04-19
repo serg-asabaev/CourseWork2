@@ -46,7 +46,7 @@ class PlanesInfo:
 
         for plane in sorted_list[:count]:
             result.append(plane)
-            print(f'Борт № {plane['plane_id']}, высота {plane['baro_altitude']} метров.')
+            print(f'Борт № {plane["plane_id"]}, высота {plane["baro_altitude"]} метров.')
 
         return result
 
@@ -62,6 +62,6 @@ class PlanesInfo:
         for plane in planes:
             if plane['plane_country'] == country:
                 result.append(plane)
-                print(f'Борт № {plane['plane_id']}.')
+                print(f'Борт № {plane["plane_id"]}.')
 
         return result
