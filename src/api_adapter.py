@@ -21,10 +21,8 @@ class APIAdapter(APIAdapterBase):
         self.__opensky_url = 'https://opensky-network.org/api/states/all?'
         self.__aeroplanes = None
 
-
-    def get_aeroplanes(self, country: str) -> None:
-        """Получение списка самолетов из АПИ"""
-
+    def get_geo_coords(self, country):
+        """Получение координат по названию страны"""
         #Headers с user-agent - обязательный параметр при запросе к nominatim.openstreetmap.
         #Вы можете использовать любое название вместо test-app/1.0, например просто test-app.
         headers_nominatim = {
@@ -43,7 +41,12 @@ class APIAdapter(APIAdapterBase):
         if response.status_code != 200:
             raise ConnectionError('Ответ не получен!')
 
-        data = response.json()
+        return response.json()
+
+    def get_aeroplanes(self, country: str) -> None:
+        """Получение списка самолетов из АПИ"""
+
+        data = self.get_geo_coords(country)
 
         #Пример ответа от nominatim.openstreetmap можно посмотреть в задании курсовой.
         geo_coordinates = data[0].get('boundingbox')

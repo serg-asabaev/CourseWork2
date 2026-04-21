@@ -21,7 +21,7 @@ class Plane:
     def __eq__(self, other):
         """Сравнение двух самолетов по идентификатору на равенство"""
 
-        if isinstance(other, Plane):
+        if not isinstance(other, Plane):
             raise TypeError('Некорректный тип аргуманта!')
 
         if self.plane_id == other.plane_id:
