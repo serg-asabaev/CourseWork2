@@ -3,7 +3,7 @@ from requests import get
 
 
 class APIAdapterBase(ABC):
-
+    """Абстрактный родительский класс для классов получения данных из АПИ"""
     @abstractmethod
     def get_aeroplanes(self, country: str):
         pass
@@ -14,6 +14,7 @@ class APIAdapterBase(ABC):
 
 
 class APIAdapter(APIAdapterBase):
+    """Класс для получения данных по названию страны на территории которой рассматривается движение"""
 
     def __init__(self) -> None:
         self.__openstreetmap_url = 'https://nominatim.openstreetmap.org/search'
@@ -22,6 +23,8 @@ class APIAdapter(APIAdapterBase):
 
 
     def get_aeroplanes(self, country: str) -> None:
+        """Получение списка самолетов из АПИ"""
+
         #Headers с user-agent - обязательный параметр при запросе к nominatim.openstreetmap.
         #Вы можете использовать любое название вместо test-app/1.0, например просто test-app.
         headers_nominatim = {
@@ -61,6 +64,8 @@ class APIAdapter(APIAdapterBase):
         return response.json()
 
     def cast_to_object_list(self, aeroplanes):
+        """Формирование из ответа апи списка обьектов"""
+
         planes_object_list = []
 
         for plane in aeroplanes['states']:

@@ -1,7 +1,6 @@
-from src.planes_info import PlanesInfo
-
 
 class Plane:
+    """Класс для работы с конкретным самолетом"""
 
     __slots__ = ('plane_id', 'call_sign', 'country', 'longitude', 'latitude',
                  'baro_altitude', 'on_ground', 'velocity', 'true_track', 'vertical_rate')

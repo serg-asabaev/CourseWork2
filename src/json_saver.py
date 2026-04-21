@@ -5,7 +5,7 @@ from src.plane import Plane
 
 
 class FileSaver(ABC):
-
+    """Базовый абстрактный класс для классов работы с файлами"""
     @abstractmethod
     def save_list_to_file(self, info: list):
         pass
