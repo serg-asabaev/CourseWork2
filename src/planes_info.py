@@ -1,10 +1,9 @@
-
 class PlanesInfo:
     """Класс для работы со списком самолетов"""
 
     def __init__(self, planes_info_response):
-        self.time = planes_info_response['time']
-        self.states = planes_info_response['states']
+        self.time = planes_info_response["time"]
+        self.states = planes_info_response["states"]
 
     def get_current_plane(self, icao24):
         """Получение данных по самолету из списка самолетов"""
@@ -27,15 +26,18 @@ class PlanesInfo:
         result = []
 
         for plane in planes_list:
-            if plane['baro_altitude'] is None:
-                plane['baro_altitude'] = 0
+            if plane["baro_altitude"] is None:
+                plane["baro_altitude"] = 0
 
-        sorted_list = sorted(planes_list, key=lambda x: x['baro_altitude'], reverse=True)
-
+        sorted_list = sorted(
+            planes_list, key=lambda x: x["baro_altitude"], reverse=True
+        )
 
         for plane in sorted_list[:count]:
             result.append(plane)
-            print(f'Борт № {plane["plane_id"]}, высота {plane["baro_altitude"]} метров.')
+            print(
+                f'Борт № {plane["plane_id"]}, высота {plane["baro_altitude"]} метров.'
+            )
 
         return result
 
@@ -49,7 +51,7 @@ class PlanesInfo:
         result = []
 
         for plane in planes:
-            if plane['plane_country'] == country:
+            if plane["plane_country"] == country:
                 result.append(plane)
                 print(f'Борт № {plane["plane_id"]}.')
 
