@@ -8,6 +8,10 @@ class PlanesInfo:
 
     def get_current_plane(self, icao24):
         """Получение данных по самолету из списка самолетов"""
+
+        if len(icao24) == 0:
+            return []
+
         res_plane = []
 
         for plane in self.states:

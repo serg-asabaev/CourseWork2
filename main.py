@@ -65,6 +65,5 @@ def user_interaction():
 
 if __name__ == '__main__':
     planes_list = api.get_aeroplanes('France')
-    print(planes_list['states'])
     print(planes_list['time'])
     # user_interaction()

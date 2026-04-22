@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import json
+import os
 
 from src.plane import Plane
 
@@ -31,7 +32,7 @@ class JSONSaver(FileSaver):
     def __init__(self, __file_name):
         self.__file_name = __file_name
 
-    def save_list_to_file(self, info: list):
+    def save_list_to_file(self, info: list) -> bool:
         """ Сохранение в файл JSON списка самолетов """
 
         if len(self.__file_name) == 0:
@@ -41,6 +42,7 @@ class JSONSaver(FileSaver):
             json.dump(info, f, ensure_ascii=False, indent=2)
 
             print(f"✓ Данные сохранены в {self.__file_name}")
+            return True
 
 
     def read_from_file(self):
@@ -54,7 +56,7 @@ class JSONSaver(FileSaver):
 
         return planes_info
 
-    def add_plane(self, inp_plane: Plane):
+    def add_plane(self, inp_plane: Plane) -> bool:
         """Добавление самолета в файл JSON"""
 
         if len(self.__file_name) == 0:
@@ -73,9 +75,10 @@ class JSONSaver(FileSaver):
             planes.append(plane_obj)
             self.save_list_to_file(planes)
             print(f"✓ Данные сохранены в {self.__file_name}")
+            return True
         else:
             print(f"В файле {self.__file_name} уже есть добавляемый объект")
-
+            return False
 
     def delete_plane(self, plane_id: str):
         """Удаление самолета из файла JSON по идентификатору борта"""
